@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: " https://token-api-njd6.onrender.com"
+  baseURL: "https://token-api-njd6.onrender.com"
 });
 
 export const getEntries = () => API.get("/entries");

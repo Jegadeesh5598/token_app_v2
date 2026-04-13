@@ -77,7 +77,19 @@ function App() {
   };
 
   const downloadUserWiseReport = () => {
-    // ✅ Add S.No (order wise)
+
+    // ✅ Calculate totals
+    let totalVoters = 0;
+    let totalNonVoters = 0;
+    let totalPeople = 0;
+
+    selectedAdminData.forEach(row => {
+      totalVoters += Number(row.no_of_voters);
+      totalNonVoters += Number(row.no_of_non_voters);
+      totalPeople += Number(row.no_of_total_peoples);
+    });
+
+    // ✅ Main Data
     const formattedData = selectedAdminData.map((row, index) => ({
       "S.No": index + 1,
       "Serial": row.serial_number,
@@ -92,14 +104,42 @@ function App() {
       "Updated": formatDate(row.updated_at || row.updatedAt),
     }));
 
-    // ✅ Convert to worksheet
+    // ✅ Add TOTAL ROW
+    formattedData.push({
+      "S.No": "",
+      "Serial": "TOTAL",
+      "Token": "",
+      "Ration": "",
+      "Voters": totalVoters,
+      "Non Voters": totalNonVoters,
+      "Total": totalPeople,
+      "Phone": "",
+      "Admin": "",
+      "Created": "",
+      "Updated": ""
+    });
+
+    // ✅ Convert to Excel
     const worksheet = XLSX.utils.json_to_sheet(formattedData);
 
-    // ✅ Create workbook
+    // ✅ Optional: Column width
+    worksheet["!cols"] = [
+      { wch: 6 },
+      { wch: 15 },
+      { wch: 10 },
+      { wch: 18 },
+      { wch: 10 },
+      { wch: 12 },
+      { wch: 10 },
+      { wch: 15 },
+      { wch: 12 },
+      { wch: 15 },
+      { wch: 15 },
+    ];
+
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "User Report");
 
-    // ✅ Generate Excel file
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
@@ -109,7 +149,6 @@ function App() {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
 
-    // ✅ Download
     saveAs(file, `${selectedAdmin || "userwise"}-report.xlsx`);
   };
 
