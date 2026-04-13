@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { Box, Button, Container, Grid, Paper, Typography, TextField, MenuItem } from "@mui/material";
 import { getEntries, getAdminUsers } from "./api";
 import Form from "./components/Form";
@@ -18,26 +18,28 @@ function App() {
     setData(res.data);
   };
 
-  const fetchAdminUsers = async () => {
+  const fetchAdminUsers = useCallback(async () => {
     try {
       const res = await getAdminUsers();
       const users = Array.isArray(res.data) ? res.data : [];
       const names = users
         .map((item) => (typeof item === "string" ? item : item.name || item.username || item.admin || ""))
         .filter(Boolean);
+
       setAdminUsers(names);
+
       if (!selectedAdmin && names.length) {
         setSelectedAdmin(names[0]);
       }
     } catch (err) {
       console.warn("Unable to load admin users", err);
     }
-  };
+  }, [selectedAdmin]);
 
   useEffect(() => {
     fetchData();
     fetchAdminUsers();
-  }, []);
+  }, [fetchAdminUsers]);
 
   const adminOptions = adminUsers.length
     ? adminUsers

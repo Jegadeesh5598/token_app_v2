@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { TextField, Button, Grid, MenuItem, Paper, Typography, Box } from "@mui/material";
 import Swal from "sweetalert2";
 import { addEntry, updateEntry } from "../api";
