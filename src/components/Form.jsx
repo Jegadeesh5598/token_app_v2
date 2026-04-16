@@ -24,22 +24,37 @@ const Form = ({ refresh, editData, setEditData }) => {
   };
 
   const validate = () => {
+    // ✅ Mandatory fields
+    if (!form.token_number || !form.phone_number) {
+      Swal.fire("Error", "Token Number and Phone Number are required", "error");
+      return false;
+    }
+
+    // ✅ Phone validation (only if provided)
     if (form.phone_number && form.phone_number.length !== 10) {
       Swal.fire("Error", "Phone must be 10 digits", "error");
       return false;
     }
 
+    // ✅ Ration validation (only if provided)
     if (form.ration_card_number && form.ration_card_number.length !== 12) {
       Swal.fire("Error", "Ration must be 12 digits", "error");
       return false;
     }
 
+    // ✅ Total validation (only if ALL provided)
     if (
-      Number(form.no_of_total_peoples) !==
-      Number(form.no_of_voters) + Number(form.no_of_non_voters)
+      form.no_of_total_peoples &&
+      form.no_of_voters &&
+      form.no_of_non_voters
     ) {
-      Swal.fire("Error", "Total mismatch", "error");
-      return false;
+      if (
+        Number(form.no_of_total_peoples) !==
+        Number(form.no_of_voters) + Number(form.no_of_non_voters)
+      ) {
+        Swal.fire("Error", "Total mismatch", "error");
+        return false;
+      }
     }
 
     return true;
@@ -115,7 +130,6 @@ const Form = ({ refresh, editData, setEditData }) => {
               label="Ration Card"
               fullWidth
               variant="outlined"
-              required
               value={form.ration_card_number}
               onChange={handleChange}
             />
