@@ -54,11 +54,11 @@ const TableComponent = ({ data, refresh, setEditData }) => {
           <TableRow sx={{ backgroundColor: "#0f2a55" }}>
             <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Serial</TableCell>
             <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Token</TableCell>
+            <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Phone</TableCell>
             <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Ration</TableCell>
             <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Voters</TableCell>
             <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Non Voters</TableCell>
             <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Total</TableCell>
-            <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Phone</TableCell>
             <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Admin</TableCell>
             <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Created</TableCell>
             <TableCell sx={{ color: "#fff", fontWeight: 700 }}>Updated</TableCell>
@@ -70,11 +70,11 @@ const TableComponent = ({ data, refresh, setEditData }) => {
             <TableRow key={row.id} hover>
               <TableCell>{row.serial_number}</TableCell>
               <TableCell>{row.token_number}</TableCell>
+              <TableCell>{row.phone_number}</TableCell>
               <TableCell>{row.ration_card_number}</TableCell>
               <TableCell>{row.no_of_voters}</TableCell>
               <TableCell>{row.no_of_non_voters}</TableCell>
               <TableCell>{row.no_of_total_peoples}</TableCell>
-              <TableCell>{row.phone_number}</TableCell>
               <TableCell>{row.admin}</TableCell>
               <TableCell>{formatDate(row.created_at || row.createdAt)}</TableCell>
               <TableCell>{formatDate(row.updated_at || row.updatedAt)}</TableCell>
